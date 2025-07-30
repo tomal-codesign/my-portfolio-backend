@@ -1,6 +1,11 @@
 const mongoose = require('mongoose');
+const AutoIncrement = require('mongoose-sequence')(mongoose);
 
 const userSchema = new mongoose.Schema({
+    id: {
+        type: Number,
+        unique: true
+    },
     name: {
         type: String,
         required: [true, 'Name is required'],
@@ -16,11 +21,23 @@ const userSchema = new mongoose.Schema({
     age: {
         type: Number,
         min: [0, 'Age must be positive']
-    }
+    },
+    profileImg: {
+        type: String,
+        default: 'default.jpg'
+    },
+    password: {
+        type: String,
+        required: [true, 'Password is required'],
+        trim: true
+    },
+
 }, {
     timestamps: true, // adds createdAt and updatedAt
     collection: 'users' // optional, just to make it clear
 });
+
+userSchema.plugin(AutoIncrement, { inc_field: 'id' });
 
 const User = mongoose.model('User', userSchema);
 
