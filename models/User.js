@@ -1,5 +1,7 @@
 const mongoose = require('mongoose');
 const AutoIncrement = require('mongoose-sequence')(mongoose);
+const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
 
 const userSchema = new mongoose.Schema({
     id: {
@@ -18,20 +20,14 @@ const userSchema = new mongoose.Schema({
         lowercase: true,
         trim: true
     },
-    age: {
-        type: Number,
-        min: [0, 'Age must be positive']
-    },
     profileImg: {
         type: String,
-        default: 'default.jpg'
     },
     password: {
         type: String,
         required: [true, 'Password is required'],
         trim: true
     },
-
 }, {
     timestamps: true, // adds createdAt and updatedAt
     collection: 'users' // optional, just to make it clear
