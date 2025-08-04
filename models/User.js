@@ -28,12 +28,16 @@ const userSchema = new mongoose.Schema({
         required: [true, 'Password is required'],
         trim: true
     },
+    roleId: {
+        type: Number,
+        required: [true, 'Role is required']
+    }
 }, {
     timestamps: true, // adds createdAt and updatedAt
     collection: 'users' // optional, just to make it clear
 });
 
-userSchema.plugin(AutoIncrement, { inc_field: 'id' });
+userSchema.plugin(AutoIncrement, { inc_field: 'id', id: 'user_seq' , start_seq: 1});
 
 const User = mongoose.model('User', userSchema);
 

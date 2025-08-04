@@ -6,6 +6,7 @@ const cors = require('cors');
 
 const userRoutes = require('./routes/userRoutes');
 const authRoutes = require('./routes/authRoutes');
+const roleRoutes = require('./routes/roleRoutes');
 const app = express();
 
 // Middlewares
@@ -15,6 +16,7 @@ app.use(express.json()); // parse JSON
 // Routes
 app.use('/api', userRoutes);
 app.use('/api', authRoutes);
+app.use('/api', roleRoutes);
 
 // MongoDB Connect
 mongoose.connect(process.env.MONGO_URI).then(() => {
