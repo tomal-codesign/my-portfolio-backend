@@ -18,6 +18,7 @@ router.get('/users', authenticateToken, async (req, res) => {
                 profileImg: user.profileImg,
                 roleId: role.id,
                 roleName: role.name,
+                password: user.password
             };
         }));
         res.status(200).json({ message: 'Users get successfully', users });
