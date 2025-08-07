@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const User = require('../models/User');
+const Role = require('../models/Role');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
@@ -14,12 +15,13 @@ router.post('/login', async (req, res) => {
 
         if (password !== user.password) return res.status(401).json({ error: 'Invalid credentials' });
 
+        const role = await Role.findOne({ id: user.roleId });
+
         const token = jwt.sign(
             { userId: user._id, email: user.email },
             process.env.JWT_SECRET,
             { expiresIn: '72h' }
         );
-
         res.status(200).json({
             message: 'Login successful',
             token,
@@ -29,7 +31,7 @@ router.post('/login', async (req, res) => {
                 email: user.email,
                 profileImg: user.profileImg,
                 roleId: user.roleId,
-                roleName: user.roleName
+                roleName: role.name || null,
             }
         });
     } catch (err) {
