@@ -7,6 +7,7 @@ const cors = require('cors');
 const userRoutes = require('./routes/userRoutes');
 const authRoutes = require('./routes/authRoutes');
 const roleRoutes = require('./routes/roleRoutes');
+const portfolioRoutes = require('./routes/portfolioRoutes');
 const app = express();
 
 // Middlewares
@@ -17,6 +18,7 @@ app.use(express.json()); // parse JSON
 app.use('/api', userRoutes);
 app.use('/api', authRoutes);
 app.use('/api', roleRoutes);
+app.use('/api', portfolioRoutes);
 
 // MongoDB Connect
 mongoose.connect(process.env.MONGO_URI).then(() => {
