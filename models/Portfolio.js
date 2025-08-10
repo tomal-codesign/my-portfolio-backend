@@ -24,7 +24,7 @@ const portfolioSchema = new mongoose.Schema({
         type: String,
         trim: true
     },
-    roleId: {
+    userId: {
         type: Number,
         required: true
     }

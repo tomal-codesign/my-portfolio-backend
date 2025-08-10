@@ -13,7 +13,7 @@ router.get('/portfolios', authenticateToken, async (req, res) => {
             description: portfolio.description,
             imageUrl: portfolio.imageUrl,
             link: portfolio.link,
-            roleId: portfolio.roleId,
+            userId: portfolio.userId,
         }));
         res.status(200).json({ message: 'Portfolios fetched successfully', portfolios });
     } catch (err) {
@@ -22,17 +22,17 @@ router.get('/portfolios', authenticateToken, async (req, res) => {
     }
 });
 
-// get roleId wise portfolios
+// get UserId wise portfolios
 router.get('/portfolios/:id', authenticateToken, async (req, res) => {
     try {
-        const getPortfolios = await Portfolio.find({ roleId: req.params.id });
+        const getPortfolios = await Portfolio.find({ userId: req.params.id });
         const portfolios = getPortfolios.map(portfolio => ({
             id: portfolio.id,
             title: portfolio.title,
             description: portfolio.description,
             imageUrl: portfolio.imageUrl,
             link: portfolio.link,
-            roleId: portfolio.roleId,
+            userId: portfolio.userId,
         }));
         res.status(200).json({ message: 'Portfolios fetched successfully', portfolios });
     } catch (err) {
@@ -41,17 +41,17 @@ router.get('/portfolios/:id', authenticateToken, async (req, res) => {
     }
 });
 
-//get without authenticatetoken roleId wise portfolios
+//get without authenticatetoken UserId wise portfolios
 router.get('/public/portfolios/:id', async (req, res) => {
     try {
-        const getPortfolios = await Portfolio.find({ roleId: req.params.id });
+        const getPortfolios = await Portfolio.find({ userId: req.params.id });
         const portfolios = getPortfolios.map(portfolio => ({
             id: portfolio.id,
             title: portfolio.title,
             description: portfolio.description,
             imageUrl: portfolio.imageUrl,
             link: portfolio.link,
-            roleId: portfolio.roleId,
+            userId: portfolio.userId,
         }));
         res.status(200).json({ message: 'Portfolios fetched successfully', portfolios });
     } catch (err) {
@@ -73,9 +73,9 @@ router.get('/public/portfolio/:id', async (req, res) => {
 
 // CREATE a new portfolio
 router.post('/portfolio/create', authenticateToken, async (req, res) => {
-    const { title, description, imageUrl, link, roleId } = req.body;
+    const { title, description, imageUrl, link, userId } = req.body;
     try {
-        const newPortfolio = await Portfolio.create({ title, description, imageUrl, link, roleId });
+        const newPortfolio = await Portfolio.create({ title, description, imageUrl, link, userId });
         res.status(201).json({ message: 'Portfolio created successfully', portfolio: newPortfolio });
     } catch (err) {
         console.error('Error creating portfolio:', err.message);
