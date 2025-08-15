@@ -20,7 +20,7 @@ const userSchema = new mongoose.Schema({
     },
     profileImg: {
         type: String,
-        default: 'https://avatar.iran.liara.run/public/45'
+        default: 'default.jpg'
     },
     password: {
         type: String,
