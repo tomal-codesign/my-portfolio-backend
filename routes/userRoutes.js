@@ -94,9 +94,17 @@ router.delete('/user/:id', authenticateToken, async (req, res) => {
 // GET Single User
 router.get('/user/:id', authenticateToken, async (req, res) => {
     try {
-        const user = await User.findOne({ id: parseInt(req.params.id) });
-        if (!user) {
-            return res.status(404).json({ error: 'User not found' });
+        const userData = await User.findOne({ id: parseInt(req.params.id) });
+        if (!userData) return res.status(404).json({ error: 'User not found' });
+        console.log(userData)
+        const role = await Role.findOne({ id: userData.roleId });
+        const user = {
+            id: userData.id,
+            name: userData.name,
+            email: userData.email,
+            profileImg: userData.profileImg,
+            roleId: userData.roleId,
+            roleName: role.name || null
         }
         res.status(200).json({ message: 'User fetched successfully', user });
     } catch (err) {
