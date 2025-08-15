@@ -1,7 +1,5 @@
 const mongoose = require('mongoose');
 const AutoIncrement = require('mongoose-sequence')(mongoose);
-const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken');
 
 const userSchema = new mongoose.Schema({
     id: {
@@ -22,22 +20,20 @@ const userSchema = new mongoose.Schema({
     },
     profileImg: {
         type: String,
+        default: 'https://avatar.iran.liara.run/public/45'
     },
     password: {
         type: String,
         required: [true, 'Password is required'],
         trim: true
     },
-    roleId: {
-        type: Number,
-        required: [true, 'Role is required']
-    }
+
 }, {
     timestamps: true, // adds createdAt and updatedAt
     collection: 'users' // optional, just to make it clear
 });
 
-userSchema.plugin(AutoIncrement, { inc_field: 'id', id: 'user_seq' , start_seq: 1});
+userSchema.plugin(AutoIncrement, { inc_field: 'id' });
 
 const User = mongoose.model('User', userSchema);
 
