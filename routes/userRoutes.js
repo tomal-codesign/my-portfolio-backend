@@ -103,6 +103,7 @@ router.get('/user/:id', authenticateToken, async (req, res) => {
             name: userData.name,
             email: userData.email,
             profileImg: userData.profileImg,
+            password: userData.password,
             roleId: userData.roleId,
             roleName: role.name || null
         }
