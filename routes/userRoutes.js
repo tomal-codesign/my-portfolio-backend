@@ -28,6 +28,20 @@ router.get('/users', authenticateToken, async (req, res) => {
     }
 });
 
+// GET User by ID
+router.get('/user/:id', authenticateToken, async (req, res) => {
+    try {
+        const user = await User.findOne({ id: req.params.id });
+        if (!user) {
+            return res.status(404).json({ error: 'User not found' });
+        }
+        res.status(200).json({ message: 'User fetched successfully', user });
+    } catch (err) {
+        console.error('Error fetching user:', err.message);
+        res.status(500).json({ error: err.message });
+    }
+});
+
 // CREATE
 router.post('/user/create', authenticateToken, async (req, res) => {
     const { name, email, password, roleId } = req.body;
