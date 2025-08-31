@@ -6,7 +6,7 @@ const authenticateToken = require('../middleware/auth');
 // GET all portfolios
 router.get('/portfolios', authenticateToken, async (req, res) => {
     try {
-        const getPortfolios = await Portfolio.find();
+        const getPortfolios = await Portfolio.find().sort({ _id: -1 });
         const portfolios = getPortfolios.map(portfolio => ({
             id: portfolio.id,
             title: portfolio.title,
@@ -44,7 +44,7 @@ router.get('/portfolios/:id', authenticateToken, async (req, res) => {
 //get without authenticatetoken UserId wise portfolios
 router.get('/public/portfolios/:id', async (req, res) => {
     try {
-        const getPortfolios = await Portfolio.find({ userId: req.params.id });
+        const getPortfolios = await Portfolio.find({ userId: req.params.id }).sort({ _id: -1 });
         const portfolios = getPortfolios.map(portfolio => ({
             id: portfolio.id,
             title: portfolio.title,
